@@ -1,6 +1,6 @@
-# Bolt-Typescript-Starter
+# Duino
 
-A starter library for the Bolt Framework. Pluggable and deployable anywhere! 🔥
+Turner Fenton's local bot!
 
 ![build status](https://github.com/rishiosaur/bolt-ts-starter/workflows/build/badge.svg)
 ![lint status](https://github.com/rishiosaur/bolt-ts-starter/workflows/lint/badge.svg)
