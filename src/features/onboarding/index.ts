@@ -96,13 +96,25 @@ const onboardingFeature = (app: App) => {
 
 			const { value: userID } = action as any
 
-			// await removeActionsFromMessage(body)
+			await removeActionsFromMessage(body)
 
 			const im = postMessageCurry(userID)
 
 			await sendSequentially(
 				[
 					'That was an awesome introduction! I guess I should introduce myself :sweat_smile:',
+					"I'm Turner Fenton's personal club bot! I'll be handling everything from :flying_money_with_wings: funding and events to welcoming amazing new members like you :sparkling_heart: !",
+					[
+						'You can find my source over at <https://github.com/tfsshackclub/duino|our club Github :githubparrot:>!',
+						2000,
+					],
+					[
+						"Now, you're probably wondering what else I can do for you, and the answer is a LOT! You can interact with me through DMs, or restart this onboarding by using the `/turner-restart` slash command.",
+						3000,
+					],
+					"DMing me `help` will give you a list of all the public commands (it's up to you to find the :ghost: secret ones); there are some fun puzzles for some commands. If you have any questions, you can always DM <@UHFEGV147> or <@UMW5W8DLZ>, your presidents for this year.",
+					'Feel free to explore the *amazing* channels that my cousin Clippy introduced you to (Hack Club is so much more than just something at Turner!)',
+					`That's about it for me for now—welcome to the 2020 TFSS Hack Club, <@${userID}>~! :ultrafastparrot: :hackclub: :rocket: :dizzy:`,
 				],
 				im
 			)
