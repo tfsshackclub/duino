@@ -13,15 +13,20 @@ import askToWelcomeBlocks from './blocks/askToWelcome'
 import askHaveIntroducedBlocks from './blocks/askHaveIntroduced'
 
 const onboardingFeature = (app: App) => {
-	app.command('/turner-sim-start', async ({ ack, body }) => {
-		await ack()
+	app.command(
+		!(process.env.NODE_ENV === 'production')
+			? '/turner-sim-start'
+			: '/turner-restart',
+		async ({ ack, body }) => {
+			await ack()
 
-		const { user_id: userID, channel_id: channelID } = body
+			const { user_id: userID } = body
 
-		const imEphemeral = postEphemeralUserCurry(channelID, userID)
+			const imEphemeral = postEphemeralUserCurry(club_channel, userID)
 
-		await imEphemeral(startChannelDialogBlocks(userID))
-	})
+			await imEphemeral(startChannelDialogBlocks(userID))
+		}
+	)
 
 	app.action('onboard_hacker', async ({ ack, action, body }) => {
 		await ack()
