@@ -7,11 +7,10 @@ import {
 } from './middleware/index'
 import * as features from './features/index'
 
-const app = new App({
+export const app = new App({
 	signingSecret: signing_secret,
 	token,
 })
-
 ;(async () => {
 	// Start your app
 	await app.start(process.env.PORT || 3000)
