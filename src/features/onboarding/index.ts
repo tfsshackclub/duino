@@ -28,6 +28,16 @@ const onboardingFeature = (app: App) => {
 		}
 	)
 
+	app.event('member_joined_channel', async ({ event, body }) => {
+		const { channel: channelID, user: userID } = event
+
+		if (club_channel === channelID) {
+			const imEphemeral = postEphemeralUserCurry(club_channel, userID)
+
+			await imEphemeral(startChannelDialogBlocks(userID))
+		}
+	})
+
 	app.action('onboard_hacker', async ({ ack, action, body }) => {
 		await ack()
 
