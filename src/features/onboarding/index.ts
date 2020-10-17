@@ -6,9 +6,11 @@ import {
 	postMessageCurry,
 	removeActionsFromMessage,
 	sendSequentially,
+	postMessage,
+	postEphemeral,
 } from '../../util/chat/index'
 import startChannelDialogBlocks from './blocks/startChannelDialog'
-import { club_channel } from '../../config'
+import { club_channel, token } from '../../config'
 import askToWelcomeBlocks from './blocks/askToWelcome'
 import askHaveIntroducedBlocks from './blocks/askHaveIntroduced'
 import { sleep } from '../../util/async/index'
@@ -44,6 +46,12 @@ const onboardingFeature = (app: App) => {
 		await ack()
 
 		console.log(body)
+
+		await app.client.chat.delete({
+			ts: (body as any).container.message_ts,
+			channel: (body as any).container.channel_id,
+			token,
+		})
 
 		const { value: userID } = action as any
 
@@ -99,6 +107,14 @@ const onboardingFeature = (app: App) => {
 		const imEphemeral = postEphemeralUserCurry(club_channel, userID)
 		const im = postMessageCurry(userID)
 
+		await postEphemeral(
+			club_channel,
+			userID,
+			...blocksAndText(
+				`<@${userID}>, feel free to introduce yourself to the club!`
+			)
+		)
+
 		await imChannel(
 			...blocksAndText(
 				`${sample(
@@ -123,6 +139,14 @@ const onboardingFeature = (app: App) => {
 
 		const { value: userID } = action as any
 		const im = postMessageCurry(userID)
+
+		await postEphemeral(
+			club_channel,
+			userID,
+			...blocksAndText(
+				`<@${userID}>, feel free to introduce yourself to the club!`
+			)
+		)
 
 		await im(
 			...blocksAndText(
