@@ -45,14 +45,6 @@ const onboardingFeature = (app: App) => {
 	app.action('onboard_hacker', async ({ ack, action, body }) => {
 		await ack()
 
-		console.log(body)
-
-		await app.client.chat.delete({
-			ts: (body as any).container.message_ts,
-			channel: (body as any).container.channel_id,
-			token,
-		})
-
 		const { value: userID } = action as any
 
 		const im = postMessageCurry(userID)
