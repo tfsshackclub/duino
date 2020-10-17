@@ -37,11 +37,11 @@ const startChannelDialogBlocks = (id: string) => [
 				text: {
 					type: 'plain_text',
 					emoji: true,
-					text: 'No thanks.',
+					text: 'Nope',
 				},
 				style: 'danger',
 				value: id,
-				action_id: 'noPost',
+				action_id: 'not_club_hacker',
 			},
 		],
 	},

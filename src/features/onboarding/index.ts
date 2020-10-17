@@ -11,6 +11,7 @@ import startChannelDialogBlocks from './blocks/startChannelDialog'
 import { club_channel } from '../../config'
 import askToWelcomeBlocks from './blocks/askToWelcome'
 import askHaveIntroducedBlocks from './blocks/askHaveIntroduced'
+import { sleep } from '../../util/async/index'
 
 const onboardingFeature = (app: App) => {
 	app.command(
@@ -74,6 +75,18 @@ const onboardingFeature = (app: App) => {
 		await im(askToWelcomeBlocks(userID))
 	})
 
+	app.action('not_club_hacker', async ({ ack, action, body }) => {
+		await ack()
+
+		const imEphemeral = postEphemeralUserCurry(club_channel, body.user.id)
+
+		imEphemeral(
+			...blocksAndText(
+				"That's alright! Since you're not a TFSS Hack Club member, I won't walk you through the onboarding flow—feel free to stay in this channel to chill, though!"
+			)
+		)
+	})
+
 	app.action('welcome_hacker_public', async ({ ack, action, body }) => {
 		await ack()
 
@@ -99,6 +112,24 @@ const onboardingFeature = (app: App) => {
 			)
 		)
 
+		await im(askHaveIntroducedBlocks(userID))
+	})
+
+	app.action('no_welcome_hacker', async ({ ack, action, body }) => {
+		await ack()
+
+		await removeActionsFromMessage(body)
+
+		const { value: userID } = action as any
+		const im = postMessageCurry(userID)
+
+		await im(
+			...blocksAndText(
+				"That's alright! I'll wait here until you've introduced yourself :D"
+			)
+		)
+
+		sleep(3000)
 		await im(askHaveIntroducedBlocks(userID))
 	})
 
