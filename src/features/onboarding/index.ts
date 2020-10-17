@@ -33,6 +33,7 @@ const onboardingFeature = (app: App) => {
 		const { channel: channelID, user: userID } = event
 
 		if (club_channel === channelID) {
+			console.log(body)
 			const imEphemeral = postEphemeralUserCurry(club_channel, userID)
 
 			await imEphemeral(startChannelDialogBlocks(userID))
