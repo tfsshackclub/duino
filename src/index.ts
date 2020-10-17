@@ -1,10 +1,5 @@
 import { App } from '@slack/bolt'
 import { signing_secret, token, name } from './config'
-import {
-	filterDM,
-	filterNoBotMessages,
-	filterChannel,
-} from './middleware/index'
 import * as features from './features/index'
 
 export const app = new App({
